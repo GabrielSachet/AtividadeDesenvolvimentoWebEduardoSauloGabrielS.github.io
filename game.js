@@ -1400,7 +1400,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (boost) {
             submarine.speed = 10;
-            health -= 0.0133;
+            health -= 0.0083;
             createBlueParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 4);
             createRedParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 2);
             soundEffects.playBoost();
@@ -2628,3 +2628,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
