@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profundezas Oceânicas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        <canvas id="interior-canvas" style="display: none;"></canvas>
+        <div id="depth-display">Profundidade: 0m</div>
+        <div id="health-display">Vida: 100%</div>
+        <div id="money-display">Dinheiro: R$0</div>
+
+        <div id="volume-control" style="position: absolute; bottom: 20px; right: 20px; z-index: 100; background: rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 5px; color: #00bfff;">
+            <label for="volume-slider">Volume: </label>
+            <input type="range" id="volume-slider" min="0" max="100" value="70">
+        </div>
+
+        <div id="start-screen">
+            <h2>EXPLORAÇÃO SUBMARINA</h2>
+            <div class="start-content">
+                <!--
+            <img src="imagens/documento.png" class="start-image">
+            -->
+                <div class="instructions">
+                    <h3>Como Jogar:</h3>
+                    <ul>
+                        <li>Use as teclas <span class="highlight">W/A/S/D</span> para controlar o submarino</li>
+                        <li>Use as teclas <span class="highlight">⬆️/⬅️/⬇️/➡️</span> para atirar em inimigos</li>
+                        <li>Colete tesouros</li>
+                        <li>Evite colidir com rochosas e peixes</li>
+                        <li>Use <span class="highlight">F</span> para acelerar</li>
+                        <li>Use <span class="highlight">E</span> para se curar a custa de dinheiro</li>
+                    </ul>
+                    <button id="start-button">INICIAR JOGO</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over">
+            <h2>VOCÊ PERDEU!</h2>
+            <p>Seu submarino foi destruído!</p>
+            <p id="final-depth">Profundidade máxima: 0m</p>
+            <p id="final-money">Dinheiro: R$0 Dinheiro máximo: R$0</p>
+            <button id="restart-button">TENTAR NOVAMENTE</button>
+        </div>
+        <div id="victory-screen" class="screen" style="display: none;">
+            <div class="screen-content">
+                <h2>VITÓRIA!</h2>
+                <p>Você derrotou o Glutão-Abissal!</p>
+                <p id="victory-depth">Profundidade máxima: 0m</p>
+                <p id="victory-money">Dinheiro: R$0 | Dinheiro máximo: R$0</p>
+                <button id="victory-restart-button">Jogar Novamente</button>
+            </div>
+        </div>
+    </div>
+
+    <img id="submarine-sprite" src="imagens/Submarino.png">
+    <img id="explosion-gif" src="imagens/explosao.gif" style="display: none; position: absolute; z-index: 50;">
+    <img id="boss-sprite" src="imagens/peixeChefe.png" style="display: none;">
+    <!--
+    <img id="submarine-interior" src="imagens/interior_submarino.png">
+    -->
+
+    <img id="coin1-sprite" src="imagens/Moeda1.png" style="display: none;">
+    <img id="coin2-sprite" src="imagens/Moeda2.png" style="display: none;">
+    <img id="coin3-sprite" src="imagens/Moeda3.png" style="display: none;">
+    <img id="coin4-sprite" src="imagens/Moeda4.png" style="display: none;">
+    <img id="coin5-sprite" src="imagens/Moeda5.png" style="display: none;">
+    <img id="coin6-sprite" src="imagens/Moeda6.png" style="display: none;">
+
+    <script src="game.js"></script>
+</body>
+</html>
