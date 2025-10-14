@@ -1223,11 +1223,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const chargeSpeed = 8;
             let chargeDistance;
             if (distance > 600) {
-                chargeDistance = 400;
+                chargeDistance = 350;
             } else if (distance > 300) {
-                chargeDistance = 300;
+                chargeDistance = 250;
             } else {
-                chargeDistance = 200;
+                chargeDistance = 100;
             }
 
             boss.specialAttacks.push({
@@ -2650,6 +2650,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
