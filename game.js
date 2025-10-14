@@ -2367,10 +2367,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         case 'o':
                             health -= health;
                             break;
+                            /*
                         case 'ç':
                             money += 2;
                             break;
-                            /*
                         case 'p': // segurar p/ acelerar
                             if (submarine.speed != 100) submarine.speed = 100;
                             else submarine.speed = 5;
@@ -2625,5 +2625,6 @@ document.addEventListener('DOMContentLoaded', function () {
             audioManager.playMusic(audioManager.victoryMusic);
         }
     }
+
 
 });
