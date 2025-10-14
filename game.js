@@ -550,9 +550,20 @@ document.addEventListener('DOMContentLoaded', function () {
             sprite: 'imagens/peixe14.png'
         },
         {
+            // peixe bruxa
+            name: 'Peixe Bruxa',
+            minDepth: 2700,
+            maxDepth: 3300,
+            health: 6,
+            speed: 1.8,
+            damage: 9,
+            size: 65,
+            sprite: 'imagens/peixe19.png'
+        },
+        {
             // peixe espinha
             name: 'Peixe Espinha',
-            minDepth: 2800,
+            minDepth: 3000,
             maxDepth: 3500,
             health: 6,
             speed: 1.8,
@@ -563,8 +574,8 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             // peixe fóssil
             name: 'Peixe Fóssil',
-            minDepth: 3100,
-            maxDepth: 3700,
+            minDepth: 3200,
+            maxDepth: 3800,
             health: 7,
             speed: 1.8,
             damage: 9,
@@ -574,8 +585,8 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             // peixe osso
             name: 'Peixe Osso',
-            minDepth: 3300,
-            maxDepth: 3900,
+            minDepth: 3500,
+            maxDepth: 4000,
             health: 7,
             speed: 1.8,
             damage: 9,
@@ -2628,4 +2639,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
