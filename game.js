@@ -1220,7 +1220,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance > 0) {
-            const chargeSpeed = 8;
+            const chargeSpeed = 6;
             let chargeDistance;
             if (distance > 600) {
                 chargeDistance = 350;
@@ -2650,6 +2650,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
