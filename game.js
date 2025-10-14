@@ -594,10 +594,21 @@ document.addEventListener('DOMContentLoaded', function () {
             sprite: 'imagens/peixe6.png'
         },
         {
+            // peixe peixolhão
+            name: 'Peixolhão',
+            minDepth: 3700,
+            maxDepth: 4100,
+            health: 7,
+            speed: 1.8,
+            damage: 10,
+            size: 80,
+            sprite: 'imagens/peixe20.png'
+        },
+        {
             // peixe osséo-abissal
             name: 'Osséo-Abissal',
-            minDepth: 3700,
-            maxDepth: 4200,
+            minDepth: 4000,
+            maxDepth: 4400,
             health: 8,
             speed: 1.85,
             damage: 10,
@@ -607,7 +618,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             // peixe abissal
             name: 'Peixe Abissal',
-            minDepth: 4000,
+            minDepth: 4200,
             maxDepth: 4700,
             health: 8,
             speed: 1.9,
@@ -2639,5 +2650,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
