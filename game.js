@@ -1277,7 +1277,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const centerAngle = Math.atan2(subCenterY - bossCenterY, subCenterX - bossCenterX);
 
-        const spreadAngle = boss.phase === 1 ? 0 : boss.phase === 2 ? Math.PI / 12 : Math.PI / 10;
+        const spreadAngle = boss.phase === 1 ? 0 : boss.phase === 2 ? Math.PI / 12 : Math.PI / 8;
 
         for (let i = 0; i < bubbleCount; i++) {
             const speed = 6;
@@ -2786,6 +2786,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
