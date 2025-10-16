@@ -107,6 +107,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function createBubbleParticles(x, y, count = 8) {
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: x,
+                y: y,
+                size: 4 + Math.random() * 4,
+                speedX: (Math.random() - 0.5) * 4,
+                speedY: (Math.random() - 0.5) * 4,
+                color: `hsl(${Math.random() * 60 + 180}, 70%, 60%)`,
+                life: 60 + Math.random() * 30,
+                opacity: 1
+            });
+        }
+    }
+
     function createGreenParticles(x, y, count = 8) {
         for (let i = 0; i < count; i++) {
             particles.push({
@@ -561,11 +576,22 @@ document.addEventListener('DOMContentLoaded', function () {
             sprite: 'imagens/peixe19.png'
         },
         {
-            // peixe espinha
-            name: 'Peixe Espinha',
+            // peixe peixolhão
+            name: 'Peixolhão',
             minDepth: 3000,
             maxDepth: 3500,
-            health: 6,
+            health: 7,
+            speed: 1.8,
+            damage: 9,
+            size: 80,
+            sprite: 'imagens/peixe20.png'
+        },
+        {
+            // peixe espinha
+            name: 'Peixe Espinha',
+            minDepth: 3200,
+            maxDepth: 3800,
+            health: 7,
             speed: 1.8,
             damage: 9,
             size: 65,
@@ -574,8 +600,8 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             // peixe fóssil
             name: 'Peixe Fóssil',
-            minDepth: 3200,
-            maxDepth: 3800,
+            minDepth: 3500,
+            maxDepth: 4000,
             health: 7,
             speed: 1.8,
             damage: 9,
@@ -585,24 +611,13 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             // peixe osso
             name: 'Peixe Osso',
-            minDepth: 3500,
-            maxDepth: 4000,
-            health: 7,
-            speed: 1.8,
-            damage: 9,
-            size: 75,
-            sprite: 'imagens/peixe6.png'
-        },
-        {
-            // peixe peixolhão
-            name: 'Peixolhão',
             minDepth: 3700,
             maxDepth: 4100,
             health: 7,
             speed: 1.8,
             damage: 10,
-            size: 80,
-            sprite: 'imagens/peixe20.png'
+            size: 75,
+            sprite: 'imagens/peixe6.png'
         },
         {
             // peixe osséo-abissal
@@ -611,7 +626,7 @@ document.addEventListener('DOMContentLoaded', function () {
             maxDepth: 4400,
             health: 8,
             speed: 1.85,
-            damage: 10,
+            damage: 11,
             size: 80,
             sprite: 'imagens/peixe18.png'
         },
@@ -935,6 +950,67 @@ document.addEventListener('DOMContentLoaded', function () {
         const fixedRockCount = 10000;
         const movingRockCount = 1500;
 
+        // esquerda
+        for (let y = 0; y < WORLD_HEIGHT; y += 80) {
+            const width = 100 + Math.random() * 50;
+            const height = 85 + Math.random() * 60;
+
+            const rockDetails = generateRockDetails(width, height);
+
+            rocks.push({
+                x: -width + 50,
+                y: y,
+                width: width,
+                height: height,
+                speedX: 0,
+                speedY: 0,
+                isMoving: false,
+                details: rockDetails,
+                isWall: true
+            });
+        }
+
+        // direita
+        for (let y = 0; y < WORLD_HEIGHT; y += 80) {
+            const width = 100 + Math.random() * 50;
+            const height = 85 + Math.random() * 60;
+
+            const rockDetails = generateRockDetails(width, height);
+
+            rocks.push({
+                x: WORLD_WIDTH - 50,
+                y: y,
+                width: width,
+                height: height,
+                speedX: 0,
+                speedY: 0,
+                isMoving: false,
+                details: rockDetails,
+                isWall: true
+            });
+        }
+
+        // baixo
+        for (let x = 0; x < WORLD_WIDTH; x += 95) {
+            const width = 100 + Math.random() * 60;
+            const height = 85 + Math.random() * 50;
+
+            const rockDetails = generateRockDetails(width, height);
+
+            rocks.push({
+                x: x,
+                y: WORLD_HEIGHT - 50,
+                width: width,
+                height: height,
+                speedX: 0,
+                speedY: 0,
+                isMoving: false,
+                details: rockDetails,
+                isWall: true
+            });
+        }
+
+        // cenário
         for (let i = 0; i < fixedRockCount; i++) {
             const x = Math.random() * WORLD_WIDTH;
             const y = 100 + Math.random() * (WORLD_HEIGHT - 100);
@@ -955,6 +1031,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
+        // cenário movendo
         for (let i = 0; i < movingRockCount; i++) {
             const x = Math.random() * WORLD_WIDTH;
             const y = 100 + Math.random() * (WORLD_HEIGHT - 100);
@@ -1081,12 +1158,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         boss.flip = submarine.x < boss.x;
 
-        // Verificar limites
         if (boss.y < -boss.height) boss.y = -boss.height;
         if (boss.x < 0) boss.x = 0;
         if (boss.x > WORLD_WIDTH - boss.width) boss.x = WORLD_WIDTH - boss.width;
 
-        // Atualizar temporizador de invulnerabilidade
         if (boss.invulnerable) {
             boss.invulnerabilityTimer--;
             if (boss.invulnerabilityTimer <= 0) {
@@ -1094,7 +1169,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Atualizar cooldown de ataque básico
         if (boss.attackCooldown > 0) {
             boss.attackCooldown--;
         }
@@ -1117,6 +1191,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // SISTEMA DE ATAQUES ESPECIAIS
         boss.lastSpecialAttack++;
 
+        // Ataque 1.5: Dispado de Bolhas (Fase 1+)
+        if (boss.phase >= 1 && boss.lastSpecialAttack > 150 && Math.random() < 0.015) {
+            performBubbleShotAttack();
+            boss.lastSpecialAttack = 0;
+        }
+
         // Ataque 2: Rajada de Bolhas (Fase 2+)
         if (boss.phase >= 2 && boss.lastSpecialAttack > 180 && Math.random() < 0.02) {
             performBubbleBurstAttack();
@@ -1124,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Ataque 3: Investida Rápida (Fase 2+)
-        if (boss.phase >= 2 && boss.lastSpecialAttack > 120 && Math.random() < 0.015 && distance < 400) {
+        if (boss.phase >= 2 && boss.lastSpecialAttack > 120 && Math.random() < 0.01 && distance < 400) {
             performChargeAttack();
             boss.lastSpecialAttack = 0;
         }
@@ -1187,6 +1267,49 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function performBubbleShotAttack() {
+        const bubbleCount = boss.phase === 1 ? 1 : boss.phase === 2 ? 3 : 5;
+
+        const bossCenterX = boss.x + boss.width / 2;
+        const bossCenterY = boss.y + boss.height / 2;
+        const subCenterX = submarine.x + submarine.width / 2;
+        const subCenterY = submarine.y + submarine.height / 2;
+
+        const centerAngle = Math.atan2(subCenterY - bossCenterY, subCenterX - bossCenterX);
+
+        const spreadAngle = boss.phase === 1 ? 0 : boss.phase === 2 ? Math.PI / 12 : Math.PI / 8;
+
+        for (let i = 0; i < bubbleCount; i++) {
+            const speed = 4;
+
+            let angle;
+            if (bubbleCount === 1) {
+                angle = centerAngle;
+            } else {
+                // 3 bolhas: [-spread/2, 0, +spread/2]
+                // 5 bolhas: [-spread, -spread/2, 0, +spread/2, +spread]
+                const offset = (i - (bubbleCount - 1) / 2) * (spreadAngle / (bubbleCount - 1));
+                angle = centerAngle + offset;
+            }
+
+            boss.specialAttacks.push({
+                type: 'bubble',
+                x: bossCenterX,
+                y: bossCenterY,
+                dx: Math.cos(angle) * speed,
+                dy: Math.sin(angle) * speed,
+                radius: 15,
+                damage: 8,
+                lifetime: 240,
+                color: boss.phase === 3 ? '#ff4444' : '#44aaff'
+            });
+        }
+
+        for (let i = 0; i < 20; i++) {
+            createBlueParticles(bossCenterX, bossCenterY, 2);
+        }
+    }
+
     function performBubbleBurstAttack() {
 
         const bubbleCount = boss.phase === 2 ? 8 : 12;
@@ -1204,13 +1327,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 dy: Math.sin(angle) * speed,
                 radius: 15,
                 damage: 10,
-                lifetime: 120,
+                lifetime: 150, // 2.5 segundos (150 frames)
                 color: boss.phase === 3 ? '#ff4444' : '#44aaff'
             });
         }
 
         for (let i = 0; i < 20; i++) {
-            createBlueParticles(boss.x + boss.width / 2, boss.y + boss.height / 2, 1);
+            createBubbleParticles(boss.x + boss.width / 2, boss.y + boss.height / 2, 2);
         }
     }
 
@@ -1499,11 +1622,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         cannon.x = submarine.x + submarine.width;
         cannon.y = submarine.y + submarine.height / 2 - cannon.height / 2;
-
-
-        if (submarine.y < 0) submarine.y = 0;
-        submarine.x = Math.max(0, Math.min(WORLD_WIDTH - submarine.width, submarine.x));
-        submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.height, submarine.y));
 
         if (moveY < 0) {
             submarine.rotation = -0.2;
@@ -1915,10 +2033,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 const dx = (submarine.x + submarine.width / 2) - (rock.x + rock.width / 2);
                 const dy = (submarine.y + submarine.height / 2) - (rock.y + rock.height / 2);
 
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    submarine.x += dx > 0 ? 3 : -3;
+                const overlapX = Math.min(
+                    submarine.x + submarine.width - rock.x,
+                    rock.x + rock.width - submarine.x
+                );
+                const overlapY = Math.min(
+                    submarine.y + submarine.height - rock.y,
+                    rock.y + rock.height - submarine.y
+                );
+
+                if (overlapX < overlapY) {
+                    if (submarine.x < rock.x) {
+                        submarine.x = rock.x - submarine.width;
+                    } else {
+                        submarine.x = rock.x + rock.width;
+                    }
                 } else {
-                    submarine.y += dy > 0 ? 3 : -3;
+                    if (submarine.y < rock.y) {
+                        submarine.y = rock.y - submarine.height;
+                    } else {
+                        submarine.y = rock.y + rock.height;
+                    }
                 }
 
                 break;
@@ -2635,6 +2770,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function showVictoryScreen() {
+        if (health <= 0) return;
         gameRunning = false;
         cancelAnimationFrame(animationId);
 
