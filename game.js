@@ -2713,7 +2713,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         if (distance < attack.radius + b.radius) {
                             createBlueParticles(attack.x, attack.y, 5);
-                            boss.specialAttacks.splice(i, 1);
+                            // boss.specialAttacks.splice(i, 1);
                             bullets.splice(bi, 1);
                             break;
                         }
@@ -2786,6 +2786,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
