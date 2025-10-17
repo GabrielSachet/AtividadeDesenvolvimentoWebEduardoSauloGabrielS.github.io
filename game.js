@@ -1622,6 +1622,9 @@ document.addEventListener('DOMContentLoaded', function () {
         submarine.x += moveX * submarine.speed;
         submarine.y += moveY * submarine.speed;
 
+        submarine.x = Math.max(0, Math.min(WORLD_WIDTH - submarine.width, submarine.x));
+        submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.height, submarine.y));
+
         cannon.x = submarine.x + submarine.collisionWidth;
         cannon.y = submarine.y + submarine.collisionHeight / 2 - cannon.height / 2;
 
@@ -2788,6 +2791,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
