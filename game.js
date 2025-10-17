@@ -705,8 +705,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const submarine = {
         x: WORLD_WIDTH / 2,
         y: 0,
-        width: 80,
-        height: 40,
+        width: 800,
+        height: 400,
         speed: 5,
         rotation: 0,
         flip: false
@@ -2786,6 +2786,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
