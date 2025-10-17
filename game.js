@@ -707,7 +707,7 @@ document.addEventListener('DOMContentLoaded', function () {
         y: 0,
         width: 80,
         height: 40,
-        collisionWidth: 70,
+        collisionWidth: 60,
         collisionHeight: 30,
         speed: 5,
         rotation: 0,
@@ -2791,6 +2791,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
