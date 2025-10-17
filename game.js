@@ -705,8 +705,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const submarine = {
         x: WORLD_WIDTH / 2,
         y: 0,
-        width: 800,
-        height: 400,
+        width: 80,
+        height: 40,
+        collisionWidth: 70,
+        collisionHeight: 30,
         speed: 5,
         rotation: 0,
         flip: false
@@ -851,20 +853,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (money >= moneyCost) {
             money -= moneyCost;
-            createGreenParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 20);
+            createGreenParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 20);
             soundEffects.playHeal();
             await delay(266);
-            createGreenParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 20);
+            createGreenParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 20);
             await delay(266);
-            createGreenParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 20);
+            createGreenParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 20);
             await delay(367);
-            createGreenParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 20);
+            createGreenParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 20);
             await delay(367); // 1,667 segundos antés de continuar o código
             health += 9;
             if (health > 100) health = 100;
         }
         else {
-            createRedParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 12);
+            createRedParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 12);
         }
         lockMovements = false;
     }
@@ -1147,8 +1149,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const bossType = FISH_TYPES[boss.spriteIndex];
 
         // MOVIMENTO BÁSICO - Perseguição (Ataque 1)
-        const dx = (submarine.x + submarine.width / 2) - (boss.x + boss.width / 2);
-        const dy = (submarine.y + submarine.height / 2) - (boss.y + boss.height / 2);
+        const dx = (submarine.x + submarine.collisionWidth / 2) - (boss.x + boss.width / 2);
+        const dy = (submarine.y + submarine.collisionHeight / 2) - (boss.y + boss.height / 2);
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance > 0) {
@@ -1228,8 +1230,8 @@ document.addEventListener('DOMContentLoaded', function () {
         health -= boss.damage;
 
         createRedParticles(
-            submarine.x + submarine.width / 2,
-            submarine.y + submarine.height / 2,
+            submarine.x + submarine.collisionWidth / 2,
+            submarine.y + submarine.collisionHeight / 2,
             15
         );
 
@@ -1239,16 +1241,16 @@ document.addEventListener('DOMContentLoaded', function () {
     function performBossBasicAttack() {
         if (!boss || !bossActive) return;
 
-        const dx = (submarine.x + submarine.width / 2) - (boss.x + boss.width / 2);
-        const dy = (submarine.y + submarine.height / 2) - (boss.y + boss.height / 2);
+        const dx = (submarine.x + submarine.collisionWidth / 2) - (boss.x + boss.width / 2);
+        const dy = (submarine.y + submarine.collisionHeight / 2) - (boss.y + boss.height / 2);
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < 150) {
             health -= boss.damage;
 
             createRedParticles(
-                submarine.x + submarine.width / 2,
-                submarine.y + submarine.height / 2,
+                submarine.x + submarine.collisionWidth / 2,
+                submarine.y + submarine.collisionHeight / 2,
                 12
             );
 
@@ -1262,8 +1264,8 @@ document.addEventListener('DOMContentLoaded', function () {
             submarine.x += Math.cos(oppositeAngle) * pushForce;
             submarine.y += Math.sin(oppositeAngle) * pushForce;
 
-            submarine.x = Math.max(0, Math.min(WORLD_WIDTH - submarine.width, submarine.x));
-            submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.height, submarine.y));
+            submarine.x = Math.max(0, Math.min(WORLD_WIDTH - submarine.collisionWidth, submarine.x));
+            submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.collisionHeight, submarine.y));
         }
     }
 
@@ -1272,8 +1274,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const bossCenterX = boss.x + boss.width / 2;
         const bossCenterY = boss.y + boss.height / 2;
-        const subCenterX = submarine.x + submarine.width / 2;
-        const subCenterY = submarine.y + submarine.height / 2;
+        const subCenterX = submarine.x + submarine.collisionWidth / 2;
+        const subCenterY = submarine.y + submarine.collisionHeight / 2;
 
         const centerAngle = Math.atan2(subCenterY - bossCenterY, subCenterX - bossCenterX);
 
@@ -1338,8 +1340,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function performChargeAttack() {
-        const dx = (submarine.x + submarine.width / 2) - (boss.x + boss.width / 2);
-        const dy = (submarine.y + submarine.height / 2) - (boss.y + boss.height / 2);
+        const dx = (submarine.x + submarine.collisionWidth / 2) - (boss.x + boss.width / 2);
+        const dy = (submarine.y + submarine.collisionHeight / 2) - (boss.y + boss.height / 2);
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance > 0) {
@@ -1419,11 +1421,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 attack.y += attack.dy;
                 attack.lifetime--;
 
-                const dx = attack.x - (submarine.x + submarine.width / 2);
-                const dy = attack.y - (submarine.y + submarine.height / 2);
+                const dx = attack.x - (submarine.x + submarine.collisionWidth / 2);
+                const dy = attack.y - (submarine.y + submarine.collisionHeight / 2);
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < attack.radius + submarine.width / 2) {
+                if (distance < attack.radius + submarine.collisionWidth / 2) {
                     health -= attack.damage;
                     createRedParticles(attack.x, attack.y, 8);
                     boss.specialAttacks.splice(i, 1);
@@ -1445,8 +1447,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     health -= attack.damage;
                     attack.damageApplied = true;
                     createRedParticles(
-                        submarine.x + submarine.width / 2,
-                        submarine.y + submarine.height / 2,
+                        submarine.x + submarine.collisionWidth / 2,
+                        submarine.y + submarine.collisionHeight / 2,
                         15
                     );
 
@@ -1458,8 +1460,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     submarine.x += Math.cos(oppositeAngle) * pushForce;
                     submarine.y += Math.sin(oppositeAngle) * pushForce;
 
-                    submarine.x = Math.max(0, Math.min(WORLD_WIDTH - submarine.width, submarine.x));
-                    submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.height, submarine.y));
+                    submarine.x = Math.max(0, Math.min(WORLD_WIDTH - submarine.collisionWidth, submarine.x));
+                    submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.collisionHeight, submarine.y));
                 }
 
                 if (attack.traveled >= attack.distance) {
@@ -1473,9 +1475,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!boss) return false;
 
         return (
-            boss.x < submarine.x + submarine.width &&
+            boss.x < submarine.x + submarine.collisionWidth &&
             boss.x + boss.width > submarine.x &&
-            boss.y < submarine.y + submarine.height &&
+            boss.y < submarine.y + submarine.collisionHeight &&
             boss.y + boss.height > submarine.y
         );
     }
@@ -1546,8 +1548,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (boost) {
             submarine.speed = 10;
             health -= 0.0083;
-            createBlueParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 4);
-            createRedParticles(submarine.x + submarine.width / 2, submarine.y + submarine.height / 2, 2);
+            createBlueParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 4);
+            createRedParticles(submarine.x + submarine.collisionWidth / 2, submarine.y + submarine.collisionHeight / 2, 2);
             soundEffects.playBoost();
         }
         else {
@@ -1620,8 +1622,8 @@ document.addEventListener('DOMContentLoaded', function () {
         submarine.x += moveX * submarine.speed;
         submarine.y += moveY * submarine.speed;
 
-        cannon.x = submarine.x + submarine.width;
-        cannon.y = submarine.y + submarine.height / 2 - cannon.height / 2;
+        cannon.x = submarine.x + submarine.collisionWidth;
+        cannon.y = submarine.y + submarine.collisionHeight / 2 - cannon.height / 2;
 
         if (moveY < 0) {
             submarine.rotation = -0.2;
@@ -1663,8 +1665,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 fish.y < camera.y + camera.height;
 
             if (fishInCamera) {
-                const dx = submarine.x + submarine.width / 2 - (fish.x + fish.width / 2);
-                const dy = submarine.y + submarine.height / 2 - (fish.y + fish.height / 2);
+                const dx = submarine.x + submarine.collisionWidth / 2 - (fish.x + fish.width / 2);
+                const dy = submarine.y + submarine.collisionHeight / 2 - (fish.y + fish.height / 2);
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 const detectionRadius = 800;
@@ -1709,7 +1711,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const screenY = submarine.y - camera.y;
 
         ctx.save();
-        ctx.translate(screenX + submarine.width / 2, screenY + submarine.height / 2);
+        ctx.translate(screenX + submarine.collisionWidth / 2, screenY + submarine.collisionHeight / 2);
 
         if (submarine.flip) {
             ctx.scale(-1, 1);
@@ -1722,8 +1724,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const originalHeight = submarineSprite.naturalHeight;
             const aspectRatio = originalWidth / originalHeight;
 
-            let newWidth = submarine.width;
-            let newHeight = submarine.height;
+            let newWidth = submarine.collisionWidth;
+            let newHeight = submarine.collisionHeight;
 
             if (aspectRatio > 1) {
                 newHeight = newWidth / aspectRatio;
@@ -1740,7 +1742,7 @@ document.addEventListener('DOMContentLoaded', function () {
             );
         } else {
             ctx.fillStyle = '#3a7ebc';
-            ctx.fillRect(-submarine.width / 2, -submarine.height / 2, submarine.width, submarine.height);
+            ctx.fillRect(-submarine.collisionWidth / 2, -submarine.collisionHeight / 2, submarine.collisionWidth, submarine.collisionHeight);
         }
 
         
@@ -2008,16 +2010,16 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const rock of rocks) {
             if (
                 submarine.x < rock.x + rock.width &&
-                submarine.x + submarine.width > rock.x &&
+                submarine.x + submarine.collisionWidth > rock.x &&
                 submarine.y < rock.y + rock.height &&
-                submarine.y + submarine.height > rock.y
+                submarine.y + submarine.collisionHeight > rock.y
             ) {
                 inRock = true;
                 health -= 0.5;
 
                 createBlueParticles(
-                    submarine.x + submarine.width / 2,
-                    submarine.y + submarine.height / 2,
+                    submarine.x + submarine.collisionWidth / 2,
+                    submarine.y + submarine.collisionHeight / 2,
                     2
                 );
 
@@ -2030,27 +2032,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                const dx = (submarine.x + submarine.width / 2) - (rock.x + rock.width / 2);
-                const dy = (submarine.y + submarine.height / 2) - (rock.y + rock.height / 2);
+                const dx = (submarine.x + submarine.collisionWidth / 2) - (rock.x + rock.width / 2);
+                const dy = (submarine.y + submarine.collisionHeight / 2) - (rock.y + rock.height / 2);
 
                 const overlapX = Math.min(
-                    submarine.x + submarine.width - rock.x,
+                    submarine.x + submarine.collisionWidth - rock.x,
                     rock.x + rock.width - submarine.x
                 );
                 const overlapY = Math.min(
-                    submarine.y + submarine.height - rock.y,
+                    submarine.y + submarine.collisionHeight - rock.y,
                     rock.y + rock.height - submarine.y
                 );
 
                 if (overlapX < overlapY) {
                     if (submarine.x < rock.x) {
-                        submarine.x = rock.x - submarine.width;
+                        submarine.x = rock.x - submarine.collisionWidth;
                     } else {
                         submarine.x = rock.x + rock.width;
                     }
                 } else {
                     if (submarine.y < rock.y) {
-                        submarine.y = rock.y - submarine.height;
+                        submarine.y = rock.y - submarine.collisionHeight;
                     } else {
                         submarine.y = rock.y + rock.height;
                     }
@@ -2063,9 +2065,9 @@ document.addEventListener('DOMContentLoaded', function () {
         for (const fish of enemyFishes) {
             if (
                 submarine.x < fish.x + fish.width &&
-                submarine.x + submarine.width > fish.x &&
+                submarine.x + submarine.collisionWidth > fish.x &&
                 submarine.y < fish.y + fish.height &&
-                submarine.y + submarine.height > fish.y
+                submarine.y + submarine.collisionHeight > fish.y
             ) {
                 if (fish.attackCooldown === 0) {
                     inFish = true;
@@ -2073,8 +2075,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     fish.attackCooldown = 60;
 
                     createBlueParticles(
-                        submarine.x + submarine.width / 2,
-                        submarine.y + submarine.height / 2,
+                        submarine.x + submarine.collisionWidth / 2,
+                        submarine.y + submarine.collisionHeight / 2,
                         10
                     );
 
@@ -2093,17 +2095,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (bossActive &&
             submarine.x < boss.x + boss.width &&
-            submarine.x + submarine.width > boss.x &&
+            submarine.x + submarine.collisionWidth > boss.x &&
             submarine.y < boss.y + boss.height &&
-            submarine.y + submarine.height > boss.y) {
+            submarine.y + submarine.collisionHeight > boss.y) {
 
             if (boss.attackCooldown === 0) {
                 health -= boss.damage * 0.5;
                 boss.attackCooldown = 30;
 
                 createRedParticles(
-                    submarine.x + submarine.width / 2,
-                    submarine.y + submarine.height / 2,
+                    submarine.x + submarine.collisionWidth / 2,
+                    submarine.y + submarine.collisionHeight / 2,
                     10
                 );
 
@@ -2154,8 +2156,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const explosionGif = document.getElementById('explosion-gif');
         if (explosionGif) {
-            const submarineCenterX = submarine.x - camera.x + submarine.width / 2;
-            const submarineCenterY = submarine.y - camera.y + submarine.height / 2;
+            const submarineCenterX = submarine.x - camera.x + submarine.collisionWidth / 2;
+            const submarineCenterY = submarine.y - camera.y + submarine.collisionHeight / 2;
 
             const explosionWidth = explosionGif.width;
             const explosionHeight = explosionGif.height;
@@ -2449,9 +2451,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (
                 submarine.x < coin.x + coin.width &&
-                submarine.x + submarine.width > coin.x &&
+                submarine.x + submarine.collisionWidth > coin.x &&
                 submarine.y < coin.y + coin.height &&
-                submarine.y + submarine.height > coin.y
+                submarine.y + submarine.collisionHeight > coin.y
             ) {
                 coin.collected = true;
                 money += coin.type.value;
@@ -2550,7 +2552,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const targetY = targetDepth * 50;
-            submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.height, targetY));
+            submarine.y = Math.max(0, Math.min(WORLD_HEIGHT - submarine.collisionHeight, targetY));
             depth = Math.round(submarine.y / 50);
 
             camera.y = submarine.y - camera.height / 2;
@@ -2636,8 +2638,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (cannon.direction === 'right') dx = speed;
 
         bullets.push({
-            x: submarine.x + submarine.width / 2,
-            y: submarine.y + submarine.height / 2,
+            x: submarine.x + submarine.collisionWidth / 2,
+            y: submarine.y + submarine.collisionHeight / 2,
             dx: dx,
             dy: dy,
             radius: 7,
@@ -2786,6 +2788,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 });
+
 
 
 
